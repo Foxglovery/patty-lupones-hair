@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import StylistList from './components/stylist/StylistList';
 import CustomerList from './components/customer/CustomerList';
 import AppointmentList from './components/appointments/AppointmentList';
+import BookAppointment from './components/forms/BookAppointment';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -22,6 +23,7 @@ root.render(
     </Route>
     <Route path='appointments'>
       <Route index element={<AppointmentList />} />
+      <Route path='create' element={<BookAppointment />} />
     </Route>
   </Route>
  </Routes>

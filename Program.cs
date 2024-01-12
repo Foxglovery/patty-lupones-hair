@@ -40,6 +40,17 @@ app.MapGet("/api/stylists", (PattyLuponesHairDbContext db) =>
     }).ToList();
 });
 
+app.MapGet("/api/services", (PattyLuponesHairDbContext db) =>
+{
+    return db.Services
+    .Select(s => new ServiceDTO
+    {
+        Id = s.Id,
+        Name = s.Name,
+        Price = s.Price
+    }).ToList();
+});
+
 app.MapGet("/api/customers", (PattyLuponesHairDbContext db) =>
 {
     return db.Customers
@@ -85,6 +96,15 @@ app.MapGet("/api/appointments", (PattyLuponesHairDbContext db) =>
                     }).ToList()
     })
     .ToList();
+});
+
+app.MapPost("/api/appointments", (PattyLuponesHairDbContext db, Appointment newAppointment) =>
+{
+   
+    
+    db.Appointments.Add(newAppointment);
+    db.SaveChanges();
+    return Results.Created($"/api/appointments/{newAppointment.Id}", newAppointment);
 });
 
 
