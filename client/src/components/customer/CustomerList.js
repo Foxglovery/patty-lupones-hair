@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { GetCustomers } from "../../data/customerData";
-import { Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     GetCustomers().then(setCustomers);
@@ -14,6 +16,7 @@ export default function CustomerList() {
     <div className="container">
     <div className="sub-menu bg-light">
       <h4>Customers</h4>
+      <Button onClick={() => navigate("create")}>Add</Button>
     </div>
     <Table>
       <thead>
