@@ -8,6 +8,7 @@ import StylistList from './components/stylist/StylistList';
 import CustomerList from './components/customer/CustomerList';
 import AppointmentList from './components/appointments/AppointmentList';
 import BookAppointment from './components/forms/BookAppointment';
+import TestDateTimePicker from './components/datetime/slotpicker';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
