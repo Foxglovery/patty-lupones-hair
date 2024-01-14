@@ -3,11 +3,13 @@ import { GetStylists } from "../../data/stylistData";
 
 import React from "react";
 import { Button, Table } from "reactstrap";
+import { useNavigate } from "react-router-dom";
 
 
 
 export default function StylistList() {
   const [stylists, setStylists] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     GetStylists().then(setStylists);
@@ -16,7 +18,11 @@ export default function StylistList() {
   return (
     <div className="container">
       <div className="sub-menu bg-light">
-        <h4>Patrons</h4>
+        <h4>Stylists</h4>
+        <Button 
+        color="primary"
+        onClick={() => navigate("create")}
+        >Add</Button>
       </div>
       <Table>
         <thead>

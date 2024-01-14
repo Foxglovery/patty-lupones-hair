@@ -13,7 +13,7 @@ export default function CustomerList() {
   return (
     <div className="container">
     <div className="sub-menu bg-light">
-      <h4>Patrons</h4>
+      <h4>Customers</h4>
     </div>
     <Table>
       <thead>
