@@ -145,6 +145,13 @@ app.MapPost("/api/stylists", (PattyLuponesHairDbContext db, Stylist stylist) =>
     return Results.Created($"/api/stylists/{stylist.Id}", stylist);
 });
 
+app.MapPost("/api/customers", (PattyLuponesHairDbContext db, Customer newCustomer) =>
+{
+    db.Customers.Add(newCustomer);
+    db.SaveChanges();
+    return Results.Created($"/api/customers/{newCustomer.Id}", newCustomer);
+});
+
 
 app.Run();
 
