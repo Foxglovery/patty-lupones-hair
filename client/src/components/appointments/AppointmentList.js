@@ -2,7 +2,7 @@ import moment from 'moment';
 
 
 import { useEffect, useState } from "react";
-import { GetAppointments } from "../../data/appointmentData";
+import { DeleteAppointment, GetAppointments } from "../../data/appointmentData";
 import { Button, Table } from "reactstrap";
 import { Link, useNavigate } from 'react-router-dom';
 import './AppointmentList.css'
@@ -15,6 +15,12 @@ export default function AppointmentList() {
   useEffect(() => {
     GetAppointments().then(setAppointments);
   }, []);
+
+  const handleDelete = (id) => {
+    DeleteAppointment(id).then(() => {
+      GetAppointments().then(setAppointments);
+    })
+  }
 
   return (
     <div className="container">
@@ -48,6 +54,12 @@ export default function AppointmentList() {
               ))}</td>
               <td>${a.totalPrice}</td>
               <td>{moment(a.scheduledFor).format('MMMM Do YYYY, h:mm a')}</td>
+              <td>
+              <Button 
+              color="danger"
+              onClick={() => handleDelete(a.id)}
+              >Cancel</Button>
+              </td>
               
               
             </tr>
