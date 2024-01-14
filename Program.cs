@@ -138,6 +138,13 @@ app.MapDelete("/api/appointments", (PattyLuponesHairDbContext db, int id) =>
     return Results.NoContent();
 });
 
+app.MapPost("/api/stylists", (PattyLuponesHairDbContext db, Stylist stylist) =>
+{
+    db.Stylists.Add(stylist);
+    db.SaveChanges();
+    return Results.Created($"/api/stylists/{stylist.Id}", stylist);
+});
+
 
 app.Run();
 

@@ -8,7 +8,8 @@ import StylistList from './components/stylist/StylistList';
 import CustomerList from './components/customer/CustomerList';
 import AppointmentList from './components/appointments/AppointmentList';
 import BookAppointment from './components/forms/BookAppointment';
-import TestDateTimePicker from './components/datetime/slotpicker';
+
+import AddStylist from './components/forms/AddStylist';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,6 +19,7 @@ root.render(
 
     <Route path="stylists">
       <Route index element={<StylistList />} />
+      <Route path='create' element={<AddStylist />} />
     </Route>
     <Route path='customers'>
       <Route index element={<CustomerList />} />
