@@ -3,11 +3,14 @@ import moment from 'moment';
 
 import { useEffect, useState } from "react";
 import { GetAppointments } from "../../data/appointmentData";
-import { Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
+import { Link, useNavigate } from 'react-router-dom';
+import './AppointmentList.css'
 
 
 export default function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     GetAppointments().then(setAppointments);
@@ -16,8 +19,13 @@ export default function AppointmentList() {
   return (
     <div className="container">
       <div className="sub-menu bg-light">
-        <h4>Patrons</h4>
+        <h4>Appointments</h4>
       </div>
+      <Button 
+      color="primary"
+      className='book-button'
+      onClick={() => navigate("create")} 
+      >Book New Appointment</Button>
       <Table>
         <thead>
           <tr>

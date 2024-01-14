@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using PattyLuponesHair.Models.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,6 +38,17 @@ app.MapGet("/api/stylists", (PattyLuponesHairDbContext db) =>
         FirstName = s.FirstName,
         LastName = s.LastName,
         isActive = s.isActive
+    }).ToList();
+});
+
+app.MapGet("/api/services", (PattyLuponesHairDbContext db) =>
+{
+    return db.Services
+    .Select(s => new ServiceDTO
+    {
+        Id = s.Id,
+        Name = s.Name,
+        Price = s.Price
     }).ToList();
 });
 
@@ -85,6 +97,32 @@ app.MapGet("/api/appointments", (PattyLuponesHairDbContext db) =>
                     }).ToList()
     })
     .ToList();
+});
+
+//This posts but the date is wrong. 
+app.MapPost("/api/appointments", (PattyLuponesHairDbContext db, [FromBody] AppointmentCreationDTO appointmentCreationDTO) =>
+{
+    var newAppointment = new Appointment
+    {
+        StylistId = appointmentCreationDTO.NewAppointment.StylistId,
+        CustomerId = appointmentCreationDTO.NewAppointment.CustomerId,
+        ScheduledFor = appointmentCreationDTO.NewAppointment.ScheduledFor
+    };
+    var serviceIds = appointmentCreationDTO.ServiceIds;
+    db.Appointments.Add(newAppointment);
+    db.SaveChanges();
+
+    foreach(var serviceId in serviceIds)
+    {
+        var newAppointmentService = new AppointmentService
+        {
+            AppointmentId = newAppointment.Id,
+            ServiceId = serviceId
+        };
+        db.AppointmentServices.Add(newAppointmentService);
+    }
+    db.SaveChanges();
+    return Results.Created($"/api/appointments/{newAppointment.Id}", newAppointment);
 });
 
 
