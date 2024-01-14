@@ -100,7 +100,7 @@ app.MapGet("/api/appointments", (PattyLuponesHairDbContext db) =>
 });
 
 //This posts but the date is wrong. 
-app.MapPost("/api/appointments", (PattyLuponesHairDbContext db, [FromBody] AppointmentCreationDTO appointmentCreationDTO) =>
+app.MapPost("/api/appointments", (PattyLuponesHairDbContext db, AppointmentCreationDTO appointmentCreationDTO) =>
 {
     var newAppointment = new Appointment
     {
@@ -123,6 +123,19 @@ app.MapPost("/api/appointments", (PattyLuponesHairDbContext db, [FromBody] Appoi
     }
     db.SaveChanges();
     return Results.Created($"/api/appointments/{newAppointment.Id}", newAppointment);
+});
+
+app.MapDelete("/api/appointments", (PattyLuponesHairDbContext db, int id) =>
+{
+    Appointment appointmentToDelete = db.Appointments.SingleOrDefault(a => a.Id == id);
+
+    if (appointmentToDelete == null)
+    {
+        return Results.NotFound();
+    }
+    db.Appointments.Remove(appointmentToDelete);
+    db.SaveChanges();
+    return Results.NoContent();
 });
 
 
